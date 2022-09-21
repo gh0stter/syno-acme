@@ -48,12 +48,18 @@ generateCrt () {
   source config
   echo 'begin updating default cert by acme.sh tool'
   source ${ACME_BIN_PATH}/acme.sh.env
+  echo ' - begin regestering certificate'
+  ${ACME_BIN_PATH}/acme.sh --register-account --server zerossl --eab-kid ${ZEROSSL_EAB_KID} --eab-hmac-key ${ZEROSSL_EAB_HMAC_Key}
+  echo ' - done regestering certificate'
+  echo ' - begin issuing certificate'
   ${ACME_BIN_PATH}/acme.sh --force --log --issue --dns ${DNS} --dnssleep ${DNS_SLEEP} -d "${DOMAIN}" -d "*.${DOMAIN}"
+  echo ' - done issuing certificate'
+  echo ' - begin installing certificate'
   ${ACME_BIN_PATH}/acme.sh --installcert -d ${DOMAIN} -d *.${DOMAIN} \
     --certpath ${CRT_PATH}/cert.pem \
     --key-file ${CRT_PATH}/privkey.pem \
     --fullchain-file ${CRT_PATH}/fullchain.pem
-
+  echo ' - done installing certificate'
   if [ -s "${CRT_PATH}/cert.pem" ]; then
     echo 'done generateCrt'
     return 0

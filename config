@@ -1,6 +1,10 @@
 # 你主域名，如 baidu.com sina.com.cn 等
 export DOMAIN=your_domain
 
+# ZeroSSL Account
+export ZEROSSL_EAB_KID=xxx
+export ZEROSSL_EAB_HMAC_Key=xxx
+
 # DNS类型，根据域名服务商而定
 export DNS=dns_xxx
 
